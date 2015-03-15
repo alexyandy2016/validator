@@ -1,0 +1,42 @@
+{
+  "name": "validator",
+  "description": "A simple jQuery validation plugin.",
+  "version": "0.0.1",
+  "main": "dist/validator.js",
+  "keywords": [
+    "validation",
+    "jquery",
+    "plugin",
+    "html",
+    "css",
+    "javacript",
+    "front-end",
+    "web",
+    "development"
+  ],
+  "homepage": "https://github.com/fengyuanchen/validator",
+  "authors": [
+    "Fengyuan Chen"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "test",
+    "examples",
+    "assets",
+    "demos",
+    "docs",
+    "_*"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  },
+  "devDependencies": {
+    "jquery": "~1.11.2",
+    "bootstrap": "~3.3.2",
+    "qunit": "~1.17.1"
+  }
+}
