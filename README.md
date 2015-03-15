@@ -17,7 +17,7 @@
 
 ```
 dist/
-├── validator.js      (12 KB)
+├── validator.js      (13 KB)
 └── validator.min.js  ( 7 KB)
 ```
 
