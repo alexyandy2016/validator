@@ -26,10 +26,7 @@
   "bugs": {
     "url": "https://github.com/fengyuanchen/validator/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/fengyuanchen/validator/blob/master/LICENSE.md"
-  },
+  "license": "MIT",
   "dependencies": {
     "jquery": ">= 1.9.0"
   },
