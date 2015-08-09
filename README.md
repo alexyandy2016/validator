@@ -21,7 +21,19 @@ dist/
 └── validator.min.js  ( 7 KB)
 ```
 
-## Installation
+
+## Getting started
+
+### Quick start
+
+Three quick start options are available:
+
+- [Download the latest release](https://github.com/fengyuanchen/validator/archive/master.zip).
+- Clone the repository: `git clone https://github.com/fengyuanchen/validator.git`.
+- Install with [NPM](http://npmjs.org): `npm install @fengyuanchen/validator`.
+
+
+### Installation
 
 Include files:
 
@@ -31,7 +43,7 @@ Include files:
 ```
 
 
-## Usage
+### Usage
 
 Initialize with `$.fn.validator` method.
 
