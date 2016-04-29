@@ -1,7 +1,4 @@
-# Files to ignore
-
 bower_components
-examples
 assets
 demo
 docs
@@ -10,4 +7,4 @@ test
 /.*
 dist/*.map
 bower.json
-Gruntfile.js
+gulpfile.js
