@@ -431,7 +431,7 @@ Changes the global default options with `$.fn.validator.setDefaults(options)`.
 Add validation rules.
 
 ```js
-$('input).validator({
+$('input').validator({
   rules: {
     required: true
   }
