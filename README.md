@@ -2,7 +2,26 @@
 
 > A simple jQuery validation plugin.
 
-- [Demo](http://fengyuanchen.github.io/validator)
+- [Demo](https://fengyuanchen.github.io/validator)
+
+
+
+## Table of contents
+
+  - [Features](#features)
+  - [Main](#main)
+  - [Getting started](#getting-started)
+  - [Rules](#rules)
+  - [Messages](#messages)
+  - [Validators](#validators)
+  - [Options](#options)
+  - [Methods](#methods)
+  - [Events](#events)
+  - [No conflict](#no-conflict)
+  - [Browser support](#browser-support)
+  - [Versioning](#versioning)
+  - [License](#license)
+
 
 
 ## Features
@@ -13,6 +32,7 @@
 - Supports custom validators
 
 
+
 ## Main
 
 ```
@@ -20,6 +40,7 @@ dist/
 ├── validator.js      (13 KB)
 └── validator.min.js  ( 7 KB)
 ```
+
 
 
 ## Getting started
@@ -43,6 +64,7 @@ Include files:
 ```
 
 
+
 ### Usage
 
 Initialize with `$.fn.validator` method.
@@ -53,13 +75,18 @@ Initialize with `$.fn.validator` method.
 
 ```js
 $('input').validator({
-  maxlength: 3
+  rules: {
+    maxlength: 3
+  }
 });
 
 $('input').validator('isValid'); // false (required)
 $('input').val('abc').validator('isValid'); // true
 $('input').val('abcde').validator('isValid'); // false (too long)
 ```
+
+
+[⬆ back to top](#table-of-contents)
 
 
 ## Rules
@@ -78,7 +105,9 @@ Or
 
 ```js
 $('input').validator({
-  number: true
+  rules: {
+    number: true
+  }
 });
 ```
 
@@ -97,7 +126,9 @@ Or
 
 ```js
 $('input').validator({
-  email: true
+  rules: {
+    email: true
+  }
 });
 ```
 
@@ -116,7 +147,9 @@ Or
 
 ```js
 $('input').validator({
-  url: true
+  rules: {
+    url: true
+  }
 });
 ```
 
@@ -135,7 +168,9 @@ Or
 
 ```js
 $('input').validator({
-  date: true
+  rules: {
+    date: true
+  }
 });
 ```
 
@@ -155,7 +190,9 @@ Or
 
 ```js
 $('input').validator({
-  required: true
+  rules: {
+    required: true
+  }
 });
 ```
 
@@ -176,8 +213,10 @@ Or
 
 ```js
 $('input').validator({
-  number: true,
-  min: 1
+  rules: {
+    number: true,
+    min: 1
+  }
 });
 ```
 
@@ -198,8 +237,10 @@ Or
 
 ```js
 $('input').validator({
-  number: true,
-  max: 100
+  rules: {
+    number: true,
+    max: 100
+  }
 });
 ```
 
@@ -220,8 +261,10 @@ Or
 
 ```js
 $('input').validator({
-  number: true,
-  range: [1, 100]
+  rules: {
+    number: true,
+    range: [1, 100]
+  }
 });
 ```
 
@@ -242,7 +285,9 @@ Or
 
 ```js
 $('input').validator({
-  minlength: 1
+  rules: {
+    minlength: 1
+  }
 });
 ```
 
@@ -263,7 +308,9 @@ Or
 
 ```js
 $('input').validator({
-  maxlength: 100
+  rules: {
+    maxlength: 100
+  }
 });
 ```
 
@@ -283,7 +330,9 @@ Or
 
 ```js
 $('input').validator({
-  rangelength: [1, 100]
+  rules: {
+    rangelength: [1, 100]
+  }
 });
 ```
 
@@ -304,7 +353,9 @@ Or
 
 ```js
 $('input').validator({
-  pattern: /j(ava)?s(cript)?/
+  rules: {
+    pattern: /j(ava)?s(cript)?/
+  }
 });
 ```
 
@@ -325,7 +376,9 @@ Or
 
 ```js
 $('#password2').validator({
-  equalto: '#password1'
+  rules: {
+    equalto: '#password1'
+  }
 });
 ```
 
@@ -337,10 +390,12 @@ A custom rule requires a message and a validator.
 
 ```js
 $('#password2').validator({
-  exampleCustomRule: {
-    message: 'Please enter at least one "@" character.',
-    validator: function (value) {
-      return value.indexOf('@') > -1;
+  rules: {
+    exampleCustomRule: {
+      message: 'Please enter at least one "@" character.',
+      validator: function (value) {
+        return value.indexOf('@') > -1;
+      }
     }
   }
 });
@@ -352,9 +407,14 @@ $('#password2').validator({
 Changes the global default messages with `$.fn.validator.setMessages(options)`.
 
 
+
 ## Validators
 
 Changes the global default validators with `$.fn.validator.setValidators(options)`.
+
+
+[⬆ back to top](#table-of-contents)
+
 
 
 ## Options
@@ -370,6 +430,14 @@ Changes the global default options with `$.fn.validator.setDefaults(options)`.
 
 Add validation rules.
 
+```js
+$('input).validator({
+  rules: {
+    required: true
+  }
+});
+```
+
 
 ### trigger
 
@@ -378,6 +446,12 @@ Add validation rules.
 
 The event(s) which triggers validating
 
+```js
+$('input').validator({
+  trigger: 'change'
+});
+```
+
 
 ### filter
 
@@ -385,6 +459,14 @@ The event(s) which triggers validating
 - Default: `null`
 
 Filter the value before validate
+
+```js
+$('input').validator({
+  filter: function (value) {
+    return $.trim(value);
+  }
+});
+```
 
 
 ### success
@@ -401,6 +483,9 @@ A shortcut of the "success.validator" event.
 - Default: `null`
 
 A shortcut of the "error.validator" event.
+
+
+[⬆ back to top](#table-of-contents)
 
 
 
@@ -522,6 +607,10 @@ A shortcut of `isInvalid` method, means "×".
 Destroy the validator and remove the instance from target element.
 
 
+[⬆ back to top](#table-of-contents)
+
+
+
 ## Events
 
 ### success.validator
@@ -532,6 +621,10 @@ This event fires when a validation is passed.
 ### error.validator
 
 This event fires when a validation is failed.
+
+
+[⬆ back to top](#table-of-contents)
+
 
 
 ## No conflict
@@ -548,17 +641,29 @@ If you have to use other plugin with the same namespace, just call the `$.fn.val
 ```
 
 
+
 ## Browser Support
 
-- Chrome 39+
-- Firefox 34+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Opera (latest)
+- Edge (latest)
 - Internet Explorer 8+
-- Opera 25+
-- Safari 5.1+
 
 As a jQuery plugin, you also need to see the [jQuery Browser Support](http://jquery.com/browser-support/).
 
 
-## [License](LICENSE.md)
 
-Released under the [MIT](http://opensource.org/licenses/mit-license.html) license.
+## Versioning
+
+Maintained under the [Semantic Versioning guidelines](http://semver.org/).
+
+
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT) © [Fengyuan Chen](http://chenfengyuan.com)
+
+
+[⬆ back to top](#table-of-contents)
