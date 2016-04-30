@@ -1,6 +1,6 @@
 # [Validator](https://github.com/fengyuanchen/validator)
 
-> A simple jQuery validation plugin.
+> A simple jQuery form validation plugin.
 
 - [Demo](https://fengyuanchen.github.io/validator)
 
@@ -517,6 +517,28 @@ General usage:
 $().validator('method', argument1, , argument2, ..., argumentN)
 ```
 
+### update()
+
+Update rule(s) from element attributes to validator instance.
+
+```html
+<input type="number" min="1">
+```
+
+```js
+var $input = $('input');
+var instance;
+
+// Initialize
+$input.validator();
+
+// Change attribute
+$input.attr('max', 100);
+
+// Update rule
+$input.validator('update');
+```
+
 
 ### addRule(name, value)
 
@@ -526,7 +548,7 @@ $().validator('method', argument1, , argument2, ..., argumentN)
 - **value**:
   - This is optional when the "name" parameter is an object.
 
-Add new rule(s);
+Add new rule(s).
 
 ```js
 // Supported rule
