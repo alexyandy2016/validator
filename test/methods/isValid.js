@@ -6,7 +6,7 @@ $(function () {
         type: 'number'
       }).validator();
 
-  QUnit.test('methods.isValid', function (assert) {
+  QUnit.test('methods#isValid', function (assert) {
     assert.ok(!$element.validator('isValid'), 'empty is not valid. (isValid)');
     assert.ok(!$element.validator('v'), 'empty is not valid (v)');
 

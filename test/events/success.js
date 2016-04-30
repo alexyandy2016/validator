@@ -9,7 +9,7 @@ $(function () {
 
   $element.on('success.validator', function (e) {
 
-    QUnit.test('events.success', function (assert) {
+    QUnit.test('events#success', function (assert) {
       assert.ok(e.type === 'success', 'e.type is "success"');
       assert.ok(e.namespace === 'validator', 'e.namespace is "validator"');
       assert.ok(e.message === '', 'e.message is empty');

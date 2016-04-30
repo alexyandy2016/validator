@@ -8,7 +8,7 @@ $(function () {
         maxlength: 10
       }).validator();
 
-  QUnit.test('methods.removeRule', function (assert) {
+  QUnit.test('methods#removeRule', function (assert) {
     var rules = $element.data('validator').options.rules;
 
     assert.equal(rules.minlength, 1, 'minlength is 1.');

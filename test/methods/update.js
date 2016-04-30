@@ -6,7 +6,7 @@ $(function () {
         type: 'number'
       }).validator();
 
-  QUnit.test('methods.sync', function (assert) {
+  QUnit.test('methods#update', function (assert) {
     var options = $element.data('validator').options;
 
     assert.deepEqual(options.rules, {
@@ -18,7 +18,7 @@ $(function () {
       max: 10
     });
 
-    $element.validator('sync');
+    $element.validator('update');
 
     assert.deepEqual(options.rules, {
       number: true,

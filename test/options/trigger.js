@@ -9,7 +9,7 @@ $(function () {
         trigger: 'keyup'
       });
 
-  QUnit.test('options.trigger', function (assert) {
+  QUnit.test('options#trigger', function (assert) {
     assert.ok($element.val('abc').trigger('keyup').data('validator').valid === true);
   });
 

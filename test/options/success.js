@@ -10,7 +10,7 @@ $(function () {
   $element.validator({
     success: function () {
 
-      QUnit.test('options.success', function (assert) {
+      QUnit.test('options#success', function (assert) {
         assert.ok(true, 'The success function had been called');
       });
 

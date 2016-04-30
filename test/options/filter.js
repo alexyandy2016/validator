@@ -12,7 +12,7 @@ $(function () {
         }
       });
 
-  QUnit.test('options.filter', function (assert) {
+  QUnit.test('options#filter', function (assert) {
     assert.ok($element.val('    ').validator('isInvalid'), '"    " is invalid');
     assert.ok($element.val(' a  ').validator('isValid'), '" a  " is valid');
     assert.ok($element.val(' ab ').validator('isInvalid'), '" ab " is invalid');

@@ -11,7 +11,7 @@ $(function () {
         }
       });
 
-  QUnit.test('methods.removeValidator', function (assert) {
+  QUnit.test('methods#removeValidator', function (assert) {
     $element.validator('addValidator', {
       $: function (value) {
         return /\$/.test(value);

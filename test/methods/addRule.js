@@ -6,7 +6,7 @@ $(function () {
         type: 'text'
       }).validator();
 
-  QUnit.test('methods.addRule', function (assert) {
+  QUnit.test('methods#addRule', function (assert) {
     var rules = $element.data('validator').options.rules;
 
     $element.validator('addRule', 'minlength', 1);

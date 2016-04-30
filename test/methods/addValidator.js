@@ -11,7 +11,7 @@ $(function () {
         }
       });
 
-  QUnit.test('methods.addValidator', function (assert) {
+  QUnit.test('methods#addValidator', function (assert) {
     assert.ok($element.validator('isValid'), 'empty is valid.');
 
     $element.validator('addValidator', '$', function (value) {

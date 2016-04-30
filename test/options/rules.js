@@ -35,7 +35,7 @@ $(function () {
   $element.val('example').validator('isInvalid');
   $element.val('another_example').validator('isInvalid');
 
-  QUnit.test('validators.rules', function (assert) {
+  QUnit.test('validators#rules', function (assert) {
     assert.ok($element.val('_example').validator('isValid'), '_example is valid.');
     assert.ok($element.val('example_').validator('isValid'), 'example_ is valid.');
     assert.ok($element.val('_example_').validator('isValid'), '_example_ is valid.');

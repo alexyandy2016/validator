@@ -7,7 +7,7 @@ $(function () {
         range: '[1,3]'
       }).validator();
 
-  QUnit.test('validators.range', function (assert) {
+  QUnit.test('validators#range', function (assert) {
     assert.ok($element.validator('isInvalid'), 'empty is invalid');
     assert.ok($element.val(1).validator('isValid'), '1 is valid');
     assert.ok($element.val(2).validator('isValid'), '2 is valid');

@@ -6,7 +6,7 @@ $(function () {
         type: 'url'
       }).validator();
 
-  QUnit.test('validators.url', function (assert) {
+  QUnit.test('validators#url', function (assert) {
     assert.ok($element.val('http://example.com').validator('isValid'), 'http://example.com is valid');
     assert.ok($element.val('https://example.com').validator('isValid'), 'https://example.com is valid');
     assert.ok($element.val('http://www.example.com').validator('isValid'), 'http://www.example.com is valid');

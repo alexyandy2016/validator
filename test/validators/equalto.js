@@ -7,7 +7,7 @@ $(function () {
         equalto: '<input type="password" value="123456">'
       }).validator();
 
-  QUnit.test('validators.equalto', function (assert) {
+  QUnit.test('validators#equalto', function (assert) {
     assert.ok($element.validator('isInvalid'), 'empty is invalid');
     assert.ok($element.val('12345').validator('isInvalid'), '12345 is invalid');
     assert.ok($element.val('123456').validator('isValid'), '123456 is valid');
