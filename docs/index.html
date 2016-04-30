@@ -1,78 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="ie=edge" http-equiv="x-ua-compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A basic demo of Validator.">
-  <meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, validation, front-end, frontend, web development">
+  <meta name="description" content="A simple jQuery form validation plugin.">
+  <meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, form validation, front-end, frontend, web development">
   <meta name="author" content="Fengyuan Chen">
   <title>Validator</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" rel="stylesheet">
-  <style>
-    .btn-primary {
-      border-color: #f27f1b;  /* hsb(28, 89%, 95%) */
-      background-color: #ff851b; /* hsb(28, 89%, 100%) */
-    }
-
-    .btn-primary:hover,
-    .btn-primary:focus,
-    .btn-primary:active,
-    .btn-primary.active,
-    .btn-primary.active:focus,
-    .btn-primary.active:hover {
-      border-color: #cc6b16; /* hsb(28, 89%, 80%) */
-      background-color: #d97218; /* hsb(28, 89%, 85%) */
-    }
-
-    .navbar-default  {
-      border-color: #f27f1b;
-      background-color: #ff851b;
-      color: #fff;
-    }
-
-    .navbar-default .navbar-brand,
-    .navbar-default .navbar-brand:focus,
-    .navbar-default .navbar-brand:hover,
-    .navbar-default .navbar-text,
-    .navbar-default .navbar-nav > li > a,
-    .navbar-default .navbar-nav > li > a:hover,
-    .navbar-default .navbar-nav > li > a:focus {
-      color: #fff;
-    }
-
-    .navbar-default .navbar-brand:focus,
-    .navbar-default .navbar-brand:hover,
-    .navbar-default .navbar-nav > li > a:hover,
-    .navbar-default .navbar-nav > li > a:focus {
-      opacity: .8;
-    }
-
-    .navbar-default .navbar-toggle {
-      border-color: transparent;
-      background-color: #ff851b;
-    }
-
-    .navbar-default .navbar-toggle:hover,
-    .navbar-default .navbar-toggle:focus {
-      border-color: transparent;
-      background-color: #f27f1b;
-    }
-
-    .navbar-default .navbar-toggle .icon-bar {
-      background-color: #fff;
-    }
-
-    .navbar-default .navbar-collapse {
-      border-color: #f27f1b;
-    }
-
-    .prettyprint {
-      padding: 10px 15px !important;
-      border: 1px solid #ddd !important;
-    }
-  </style>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -81,31 +18,42 @@
   <![endif]-->
 </head>
 <body>
+  <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
 
-  <header class="header">
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./">Validator</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse-1">
-          <p class="navbar-text">A simple jQuery validation plugin.</p>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="//github.com/fengyuanchen/validator/blob/master/README.md">Docs</a></li>
-            <li><a href="//github.com/fengyuanchen/validator">Github</a></li>
-            <li><a href="//chenfengyuan.com">About</a></li>
-          </ul>
-        </div>
+  <!-- Header -->
+  <header class="navbar navbar-static-top docs-header" id="top">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" data-target="#navbar-collapse" data-toggle="collapse" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="./">Validator</a>
       </div>
-    </nav>
+      <nav class="collapse navbar-collapse" id="navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://github.com/fengyuanchen/validator/tree/v0.1.0/README.md">Docs</a></li>
+          <li><a href="https://github.com/fengyuanchen/validator">GitHub</a></li>
+          <li><a href="https://fengyuanchen.github.io/">More</a></li>
+          <li><a href="http://chenfengyuan.com">About</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
+  <!-- Jumbotron -->
+  <div class="jumbotron docs-jumbotron">
+    <div class="container">
+      <h1>Validator <small class="version">v0.1.0</small></h1>
+      <p class="lead">A simple jQuery form validation plugin.</p>
+    </div>
+  </div>
+
+  <!-- Content -->
   <div class="container">
     <form role="form">
       <div class="form-group">
@@ -115,7 +63,7 @@
       </div>
       <div class="form-group">
         <label for="inputPhone">Age</label>
-        <input class="form-control" id="inputPhone" name="number" type="number" min="1" max="100" placeholder="Enter age" required>
+        <input class="form-control" id="inputPhone" name="number" type="number" max="100" min="1" placeholder="Enter age" required>
         <p class="help-block"></p>
       </div>
       <div class="form-group">
@@ -131,7 +79,7 @@
       <div class="form-group">
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="agreed" required> Agree to the <a href="javascript:void(0);">User Agreement</a>
+            <input name="agreed" type="checkbox" required> Agree to the <a href="javascript:void(0);">User Agreement</a>
           </label>
         </div>
         <p class="help-block"></p>
@@ -139,26 +87,26 @@
       <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
         <a class="btn btn-default" href="./">Reload</a>
-        <button class="btn btn-warning pull-right" type="button" data-toggle="collapse" data-target="#source">View Source</button>
+        <button class="btn btn-default pull-right" data-target="#source" data-toggle="collapse" type="button">View Source</button>
       </div>
     </form>
     <div class="collapse" id="source">
-      <pre class="prettyprint">$.fn.validator.setDefaults({
-  trigger: 'change',
-  success: function (e) {
-    console.log(e.type, e.value, e.rule);
-    $(this).closest('.form-group').removeClass('has-error').find('.help-block').empty();
-  },
-  error: function (e) {
-    console.log(e.type, e.value, e.rule);
-    $(this).closest('.form-group').addClass('has-error').find('.help-block').text(e.message);
-  }
-});
+      <pre class="prettyprint">$(function () {
+  $.fn.validator.setDefaults({
+    trigger: 'input change',
+    success: function (e) {
+      console.log(e.type, e.value, e.rule);
+      $(this).closest('.form-group').removeClass('has-error').find('.help-block').empty();
+    },
+    error: function (e) {
+      console.log(e.type, e.value, e.rule);
+      $(this).closest('.form-group').addClass('has-error').find('.help-block').text(e.message);
+    }
+  });
 
-$(function () {
-  var $form = $('.container form'),
-      $inputs = $form.find('input'),
-      $submit = $form.find(':submit');
+  var $form = $('.container form');
+  var $inputs = $form.find('input');
+  var $submit = $form.find(':submit');
 
   $inputs.validator();
 
@@ -178,47 +126,24 @@ $(function () {
     </div>
   </div>
 
-  <footer class="footer"></footer>
+  <!-- Footer -->
+  <footer class="docs-footer">
+    <div class="container">
+      <p class="heart"></p>
+      <ul class="list-inline links">
+        <li><a href="https://github.com/fengyuanchen/validator">GitHub</a></li>
+        <li><a href="https://github.com/fengyuanchen/validator/blob/master/LICENSE">License</a></li>
+        <li><a href="http://chenfengyuan.com">About</a></li>
+      </ul>
+    </div>
+  </footer>
 
   <!-- Scripts -->
-   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
-  <script src="//fengyuanchen.github.io/assets/js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <script src="https://fengyuanchen.github.io/js/common.js"></script>
   <script src="js/validator.min.js"></script>
-  <script>
-    $.fn.validator.setDefaults({
-      trigger: 'change',
-      success: function (e) {
-        console.log(e.type, e.value, e.rule);
-        $(this).closest('.form-group').removeClass('has-error').find('.help-block').empty();
-      },
-      error: function (e) {
-        console.log(e.type, e.value, e.rule);
-        $(this).closest('.form-group').addClass('has-error').find('.help-block').text(e.message);
-      }
-    });
-
-    $(function () {
-      var $form = $('.container form'),
-          $inputs = $form.find('input'),
-          $submit = $form.find(':submit');
-
-      $inputs.validator();
-
-      $submit.click(function (e) {
-        var validity = [];
-
-        $inputs.each(function () {
-          validity.push($(this).validator('isValid'));
-        });
-
-        if ($.inArray(false, validity) !== -1) {
-          e.preventDefault();
-          return false;
-        }
-      });
-    });
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
