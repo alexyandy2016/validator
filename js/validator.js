@@ -1,11 +1,11 @@
 /*!
- * Validator v0.0.1
+ * Validator v0.1.0
  * https://github.com/fengyuanchen/validator
  *
- * Copyright (c) 2015 Fengyuan Chen
+ * Copyright (c) 2015-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2015-03-15T07:51:11.245Z
+ * Date: 2016-04-30T03:20:27.877Z
  */
 
 (function (factory) {
@@ -23,21 +23,9 @@
 
   'use strict';
 
-  var NAMESPACE = '.validator',
-      EVENT_SUCCESS = 'success' + NAMESPACE,
-      EVENT_ERROR = 'error' + NAMESPACE,
-
-      Validator = function (element, options) {
-        this.element = element;
-        this.$element = $(element);
-        this.options = $.extend(true, {}, Validator.DEFAULTS, $.isPlainObject(options) && options);
-        this.isCheckboxOrRadio = /checkbox|radio/.test(element.type);
-        this.value = null;
-        this.valid = true;
-        this.init();
-      },
-
-      prototype = Validator.prototype;
+  var NAMESPACE = 'validator';
+  var EVENT_SUCCESS = 'success.' + NAMESPACE;
+  var EVENT_ERROR = 'error.' + NAMESPACE;
 
   function isNumber(n) {
     return typeof n === 'number';
@@ -54,11 +42,22 @@
   function toArray(obj, offset) {
     var args = [];
 
-    if (isNumber(offset)) { // It's necessary for IE8
+    // This is necessary for IE8
+    if (isNumber(offset)) {
       args.push(offset);
     }
 
     return args.slice.apply(obj, args);
+  }
+
+  function Validator(element, options) {
+    this.element = element;
+    this.$element = $(element);
+    this.options = $.extend(true, {}, Validator.DEFAULTS, $.isPlainObject(options) && options);
+    this.isCheckboxOrRadio = /checkbox|radio/.test(element.type);
+    this.value = null;
+    this.valid = true;
+    this.init();
   }
 
   Validator.DEFAULTS = {
@@ -105,27 +104,6 @@
     required: /\S+/
   };
 
-  Validator.MESSAGES = {
-    // Types
-    number: 'Please enter a valid number (only digits).',
-    email: 'Please enter a valid email address.',
-    url: 'Please enter a valid URL.',
-    date: 'Please enter a valid date.',
-
-    // Attributes
-    required: 'This field is required.',
-    max: 'Please enter a value less than or equal to [0].',
-    min: 'Please enter a value greater than or equal to [0].',
-    maxlength: 'Please enter no more than [0] characters.',
-    minlength: 'Please enter at least [0] characters.',
-    pattern: 'Please enter a matched value.',
-
-    // Customs
-    range: 'Please enter a value between [0] and [1].',
-    rangelength: 'Please enter a value between [0] and [1] characters long.',
-    equalto: 'Please enter the same value again.'
-  };
-
   // validators list
   Validator.VALIDATORS = [
     // Types
@@ -148,43 +126,140 @@
     'equalto'
   ];
 
-  $.extend(prototype, {
+  Validator.setDefaults = function (options) {
+    $.extend(true, Validator.DEFAULTS, options);
+  };
+
+  Validator.MESSAGES = {
+    // Types
+    number: 'Please enter a valid number (only digits).',
+    email: 'Please enter a valid email address.',
+    url: 'Please enter a valid URL.',
+    date: 'Please enter a valid date.',
+
+    // Attributes
+    required: 'This field is required.',
+    max: 'Please enter a value less than or equal to [0].',
+    min: 'Please enter a value greater than or equal to [0].',
+    maxlength: 'Please enter no more than [0] characters.',
+    minlength: 'Please enter at least [0] characters.',
+    pattern: 'Please enter a matched value.',
+
+    // Customs
+    range: 'Please enter a value between [0] and [1].',
+    rangelength: 'Please enter a value between [0] and [1] characters long.',
+    equalto: 'Please enter the same value again.'
+  };
+
+  Validator.setMessages = function (options) {
+    $.extend(Validator.MESSAGES, options);
+  };
+
+  Validator.prototype = {
+    constructor: Validator,
+
     init: function () {
-      this.sync();
+      this.update();
       this.bind();
     },
 
     bind: function () {
-      var $this = this.$element,
-          options = this.options;
+      var $this = this.$element;
+      var options = this.options;
 
-      $this.on(EVENT_SUCCESS, options.success).on(EVENT_ERROR, options.error);
+      if ($.isFunction(options.success)) {
+        $this.on(EVENT_SUCCESS, options.success);
+      }
 
-      if (options.trigger) {
+      if ($.isFunction(options.error)) {
+        $this.on(EVENT_ERROR, options.error);
+      }
+
+      if (isString(options.trigger)) {
         $this.on(options.trigger, $.proxy(this.validate, this));
       }
     },
 
     unbind: function () {
-      var $this = this.$element,
-          options = this.options;
+      var $this = this.$element;
+      var options = this.options;
 
-      $this.off(EVENT_SUCCESS, options.success).off(EVENT_ERROR, options.error);
-
-      if (options.trigger) {
-        $this.off(options.trigger, this.validate);
+      if ($.isFunction(options.success)) {
+        $this.off(EVENT_SUCCESS, options.success);
       }
-    }
-  });
 
-  $.extend(prototype, {
+      if ($.isFunction(options.error)) {
+        $this.off(EVENT_ERROR, options.error);
+      }
+
+      if (isString(options.trigger)) {
+        $this.off(options.trigger, this.validate, this);
+      }
+    },
+
+    number: function (value) {
+      return Validator.PATTERNS.number.test(value);
+    },
+
+    email: function (value) {
+      return Validator.PATTERNS.email.test(value);
+    },
+
+    url: function (value) {
+      return Validator.PATTERNS.url.test(value);
+    },
+
+    date: function (value) {
+      return !isNaN(new Date(value).valueOf());
+    },
+
+    pattern: function (value, regexp) {
+      return $.type(regexp) === 'regexp' && regexp.test(value);
+    },
+
+    required: function (value) {
+      return this.isCheckboxOrRadio ? this.element.checked : Validator.PATTERNS.required.test(value);
+    },
+
+    min: function (value, min) {
+      return parseInt(value, 10) >= min;
+    },
+
+    max: function (value, max) {
+      return parseInt(value, 10) <= max;
+    },
+
+    range: function (value, range) {
+      value = parseInt(value, 10);
+
+      return $.isArray(range) && range.length === 2 && range[0] <= value && value <= range[1];
+    },
+
+    minlength: function (value, min) {
+      return String(value).length >= min;
+    },
+
+    maxlength: function (value, max) {
+      return String(value).length <= max;
+    },
+
+    rangelength: function (value, range) {
+      var length = String(value).length;
+
+      return $.isArray(range) && range.length === 2 && range[0] <= length && length <= range[1];
+    },
+
+    equalto: function (value, target) {
+      return value === $(target).val();
+    },
+
     // Collects attribute rules
-    sync: function () {
-      var $this = this.$element,
-          options = this.options,
-          type = $this.attr('type'),
-          validators = Validator.VALIDATORS,
-          rules = {};
+    update: function () {
+      var $this = this.$element;
+      var options = this.options;
+      var type = $this.attr('type');
+      var validators = Validator.VALIDATORS;
+      var rules = {};
 
       if ($.inArray(type, validators) > -1) {
         rules[type] = true;
@@ -226,7 +301,8 @@
 
       });
 
-      options.rules = $.extend({}, options.rules, rules);
+      // The priority of rules option is greater than element attributes.
+      options.rules = $.extend({}, rules, options.rules);
     },
 
     addRule: function (name, value) {
@@ -270,12 +346,12 @@
     },
 
     validate: function () {
-      var $this = this.$element,
-          options = this.options,
-          value = $this.val(),
-          valid = true,
-          rule = {},
-          message;
+      var $this = this.$element;
+      var options = this.options;
+      var value = $this.val();
+      var valid = true;
+      var rule = {};
+      var message;
 
       if (!this.isCheckboxOrRadio && value === this.value) { // Not changed
         return this.valid;
@@ -358,65 +434,7 @@
       this.unbind();
       this.$element.removeData('validator');
     }
-  });
-
-  $.extend(prototype, {
-    number: function (value) {
-      return Validator.PATTERNS.number.test(value);
-    },
-
-    email: function (value) {
-      return Validator.PATTERNS.email.test(value);
-    },
-
-    url: function (value) {
-      return Validator.PATTERNS.url.test(value);
-    },
-
-    date: function (value) {
-      return !isNaN(new Date(value).valueOf());
-    },
-
-    pattern: function (value, regexp) {
-      return $.type(regexp) === 'regexp' && regexp.test(value);
-    },
-
-    required: function (value) {
-      return this.isCheckboxOrRadio ? this.element.checked : Validator.PATTERNS.required.test(value);
-    },
-
-    min: function (value, min) {
-      return parseInt(value, 10) >= min;
-    },
-
-    max: function (value, max) {
-      return parseInt(value, 10) <= max;
-    },
-
-    range: function (value, range) {
-      value = parseInt(value, 10);
-
-      return $.isArray(range) && range.length === 2 && range[0] <= value && value <= range[1];
-    },
-
-    minlength: function (value, min) {
-      return String(value).length >= min;
-    },
-
-    maxlength: function (value, max) {
-      return String(value).length <= max;
-    },
-
-    rangelength: function (value, range) {
-      var length = String(value).length;
-
-      return $.isArray(range) && range.length === 2 && range[0] <= length && length <= range[1];
-    },
-
-    equalto: function (value, target) {
-      return value === $(target).val();
-    }
-  });
+  };
 
   // Save the other validator
   Validator.other = $.fn.validator;
@@ -428,14 +446,18 @@
 
     this.each(function () {
       var $this = $(this),
-          data = $this.data('validator'),
+          data = $this.data(NAMESPACE),
           fn;
 
       if (!data) {
-        $this.data('validator', (data = new Validator(this, options)));
+        if (/destroy/.test(options)) {
+          return;
+        }
+
+        $this.data(NAMESPACE, (data = new Validator(this, options)));
       }
 
-      if (isString(options) && $.isFunction((fn = data[options]))) {
+      if (isString(options) && $.isFunction(fn = data[options])) {
         result = fn.apply(data, args);
       }
     });
@@ -444,15 +466,8 @@
   };
 
   $.fn.validator.Constructor = Validator;
-
-  $.fn.validator.setDefaults = function (options) {
-    $.extend(true, Validator.DEFAULTS, options);
-  };
-
-  $.fn.validator.setMessages = function (options) {
-    $.extend(Validator.MESSAGES, options);
-  };
-
+  $.fn.validator.setDefaults = Validator.setDefaults;
+  $.fn.validator.setMessages = Validator.setMessages;
   $.fn.validator.setValidators = function (options) {
     $.extend(Validator.prototype, options);
   };
