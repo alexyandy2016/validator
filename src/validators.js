@@ -1,4 +1,3 @@
-  $.extend(prototype, {
     number: function (value) {
       return Validator.PATTERNS.number.test(value);
     },
@@ -53,5 +52,4 @@
 
     equalto: function (value, target) {
       return value === $(target).val();
-    }
-  });
+    },

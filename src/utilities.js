@@ -13,7 +13,8 @@
   function toArray(obj, offset) {
     var args = [];
 
-    if (isNumber(offset)) { // It's necessary for IE8
+    // This is necessary for IE8
+    if (isNumber(offset)) {
       args.push(offset);
     }
 

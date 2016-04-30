@@ -1,11 +1,10 @@
-  $.extend(prototype, {
     // Collects attribute rules
-    sync: function () {
-      var $this = this.$element,
-          options = this.options,
-          type = $this.attr('type'),
-          validators = Validator.VALIDATORS,
-          rules = {};
+    update: function () {
+      var $this = this.$element;
+      var options = this.options;
+      var type = $this.attr('type');
+      var validators = Validator.VALIDATORS;
+      var rules = {};
 
       if ($.inArray(type, validators) > -1) {
         rules[type] = true;
@@ -47,7 +46,8 @@
 
       });
 
-      options.rules = $.extend({}, options.rules, rules);
+      // The priority of rules option is greater than element attributes.
+      options.rules = $.extend({}, rules, options.rules);
     },
 
     addRule: function (name, value) {
@@ -91,12 +91,12 @@
     },
 
     validate: function () {
-      var $this = this.$element,
-          options = this.options,
-          value = $this.val(),
-          valid = true,
-          rule = {},
-          message;
+      var $this = this.$element;
+      var options = this.options;
+      var value = $this.val();
+      var valid = true;
+      var rule = {};
+      var message;
 
       if (!this.isCheckboxOrRadio && value === this.value) { // Not changed
         return this.valid;
@@ -179,4 +179,4 @@
       this.unbind();
       this.$element.removeData('validator');
     }
-  });
+  };

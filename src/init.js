@@ -1,28 +1,41 @@
-  $.extend(prototype, {
+  Validator.prototype = {
+    constructor: Validator,
+
     init: function () {
-      this.sync();
+      this.update();
       this.bind();
     },
 
     bind: function () {
-      var $this = this.$element,
-          options = this.options;
+      var $this = this.$element;
+      var options = this.options;
 
-      $this.on(EVENT_SUCCESS, options.success).on(EVENT_ERROR, options.error);
+      if ($.isFunction(options.success)) {
+        $this.on(EVENT_SUCCESS, options.success);
+      }
 
-      if (options.trigger) {
+      if ($.isFunction(options.error)) {
+        $this.on(EVENT_ERROR, options.error);
+      }
+
+      if (isString(options.trigger)) {
         $this.on(options.trigger, $.proxy(this.validate, this));
       }
     },
 
     unbind: function () {
-      var $this = this.$element,
-          options = this.options;
+      var $this = this.$element;
+      var options = this.options;
 
-      $this.off(EVENT_SUCCESS, options.success).off(EVENT_ERROR, options.error);
-
-      if (options.trigger) {
-        $this.off(options.trigger, this.validate);
+      if ($.isFunction(options.success)) {
+        $this.off(EVENT_SUCCESS, options.success);
       }
-    }
-  });
+
+      if ($.isFunction(options.error)) {
+        $this.off(EVENT_ERROR, options.error);
+      }
+
+      if (isString(options.trigger)) {
+        $this.off(options.trigger, this.validate, this);
+      }
+    },

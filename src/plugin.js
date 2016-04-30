@@ -8,14 +8,18 @@
 
     this.each(function () {
       var $this = $(this),
-          data = $this.data('validator'),
+          data = $this.data(NAMESPACE),
           fn;
 
       if (!data) {
-        $this.data('validator', (data = new Validator(this, options)));
+        if (/destroy/.test(options)) {
+          return;
+        }
+
+        $this.data(NAMESPACE, (data = new Validator(this, options)));
       }
 
-      if (isString(options) && $.isFunction((fn = data[options]))) {
+      if (isString(options) && $.isFunction(fn = data[options])) {
         result = fn.apply(data, args);
       }
     });
@@ -24,15 +28,8 @@
   };
 
   $.fn.validator.Constructor = Validator;
-
-  $.fn.validator.setDefaults = function (options) {
-    $.extend(true, Validator.DEFAULTS, options);
-  };
-
-  $.fn.validator.setMessages = function (options) {
-    $.extend(Validator.MESSAGES, options);
-  };
-
+  $.fn.validator.setDefaults = Validator.setDefaults;
+  $.fn.validator.setMessages = Validator.setMessages;
   $.fn.validator.setValidators = function (options) {
     $.extend(Validator.prototype, options);
   };
