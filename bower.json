@@ -1,9 +1,10 @@
 {
   "name": "validator",
-  "description": "A simple jQuery validation plugin.",
+  "description": "A simple jQuery form validation plugin.",
   "version": "0.0.1",
   "main": "dist/validator.js",
   "keywords": [
+    "form",
     "validation",
     "jquery",
     "plugin",
